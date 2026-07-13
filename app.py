@@ -31,7 +31,8 @@ def solve_flexible_subset(numbers, target_1, target_2):
     sum_part2 = pulp.lpSum(numbers[i] * y2[i] for i in range(total_len))
     prob += (sum_part1 + sum_part2) - target_2 == d2_pos - d2_neg
 
-    prob.solve(pulp.PULP_CBC_CMD(msg=False))
+    # prob.solve(pulp.PULP_CBC_CMD(msg=False))
+    prob.solve(pulp.PULP_CBC_CMD(msg=False, timeLimit=60, gapRel=0.001))
 
     part1_list = [
         numbers[i] for i in range(total_len) if pulp.value(y1[i]) == 1
@@ -42,7 +43,8 @@ def solve_flexible_subset(numbers, target_1, target_2):
     remain_list = [
         numbers[i]
         for i in range(total_len)
-        if pulp.value(y1[i]) == 0 and pulp.value(y2[i]) == 0
+        # if pulp.value(y1[i]) == 0 and pulp.value(y2[i]) == 0
+        if (pulp.value(y1[i]) or 0) < 0.5 and (pulp.value(y2[i]) or 0) < 0.5
     ]
 
     return part1_list, part2_list, remain_list
