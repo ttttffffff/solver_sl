@@ -1,1 +1,1 @@
-本地运行 stramlit run app.py
+本地运行 steamlit run app.py
