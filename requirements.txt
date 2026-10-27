@@ -1,2 +1,2 @@
-pulp
 streamlit
+pulp==3.3.1
